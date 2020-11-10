@@ -21,7 +21,7 @@ $(function() {
         // Call our ajax endpoint on the server to initialize the
         // phone call
         $.ajax({
-            url: '/call',
+            url: '/call_number',
             method: 'POST',
             dataType: 'json',
             data: {

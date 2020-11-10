@@ -5,7 +5,7 @@ from app import app
 
 app.config['TWILIO_ACCOUNT_SID'] = 'ACxxxxxx'
 app.config['TWILIO_AUTH_TOKEN'] = 'yyyyyyyyy'
-app.config['TWILIO_CALLER_ID'] = '+15558675309'
+app.config['TWILIO_NUMBER'] = '+15558675309'
 
 BASE_URI = "https://api.twilio.com/2010-04-01/Accounts/" \
            "{0}".format(app.config['TWILIO_ACCOUNT_SID'])
@@ -22,7 +22,7 @@ class TwiMLTest(unittest.TestCase):
                         "</Response>: {0}".format(response.data))
         self.assertEqual("200 OK", response.status)
 
-    def sms(self, body, url='/sms', to=app.config['TWILIO_CALLER_ID'],
+    def sms(self, body, url='/sms', to=app.config['TWILIO_NUMBER'],
             from_='+15558675309', extra_params=None):
         params = {
             'SmsSid': 'SMtesting',
@@ -38,7 +38,7 @@ class TwiMLTest(unittest.TestCase):
             params = dict(params.items() + extra_params.items())
         return self.app.post(url, data=params)
 
-    def call(self, url='/voice', to=app.config['TWILIO_CALLER_ID'],
+    def call(self, url='/voice', to=app.config['TWILIO_NUMBER'],
              from_='+15558675309', digits=None, extra_params=None):
         params = {
             'CallSid': 'CAtesting',
@@ -81,7 +81,7 @@ class ClickToCallTests(TwiMLTest):
         self.assertTrue(mock.called)
         mock.assert_called_with(
             to='+15556667777',
-            from_=app.config['TWILIO_CALLER_ID'],
+            from_=app.config['TWILIO_NUMBER'],
             url='http://localhost/outbound'
         )
 
